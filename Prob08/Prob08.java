@@ -37,7 +37,7 @@ public class Prob08 {
                     hours = 0;
                     days += 1;
                 }
-                System.out.println(days + " days," + hours + " hours," + minutes + " minutes," + seconds + " seconds");
+                System.out.println("Time to Mars: " + days + " days," + hours + " hours," + minutes + " minutes," + seconds + " seconds");
             }
         } catch (Exception e) {
             e.printStackTrace();
