@@ -13,9 +13,9 @@ public class Prob10 {
             int n = Integer.parseInt(br.readLine());
             for(int i = 0; i < n; i++) {
                 int m = Integer.parseInt(br.readLine());
+                boolean capsLock = false;
                 for(int j = 0; j < m; j++) {
                     String[] input = br.readLine().split("");
-                    boolean capsLock = false;
                     for(int k = 1; k < input.length; k++) {
                         if(input[k].equalsIgnoreCase("Q")) {
                             System.out.print("    ");
@@ -27,8 +27,15 @@ public class Prob10 {
                         } else if(input[k].equals(" ")) {
                             System.out.print(" ");
                         } else {
-                            boolean lowerCase = Character.isLowerCase(input[k].charAt(0));
-                            if(lowerCase && !capsLock) {
+                            char c = input[k].charAt(0);
+                            boolean lowerCase;
+                            if((c > 64 && c < 91) || (c > 96 && c < 123)) {
+                                lowerCase = Character.isLowerCase(input[k].charAt(0));
+                            } else {
+                                lowerCase = true;
+                            }
+
+                            if((lowerCase && !capsLock) || (!lowerCase && capsLock)) {
                                 System.out.print(original[find(original, input[k]) - 1].toLowerCase());
                             } else {
                                 System.out.print(original[find(original, input[k]) - 1]);
