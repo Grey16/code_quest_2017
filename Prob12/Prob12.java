@@ -16,7 +16,6 @@ public class Prob12 {
                 for(int j = 0; j < m; j++) {
                     String temp = "";
                     char[] input = br.readLine().toCharArray();
-                    boolean firstInput = true;
                     int startIndex = String.valueOf(j).length() + 1;
                     for(int k = startIndex; k < input.length; k++) {
                         if(input[k] == ',') {
