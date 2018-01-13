@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-//Need to debug; Problems with double imprecision and final output
 
 public class Prob12 {
     public static void main(String[] args) {
