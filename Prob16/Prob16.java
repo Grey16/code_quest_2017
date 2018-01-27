@@ -52,6 +52,7 @@ public class Prob16 {
     }
 
     public static final String MULTIPLICATION = "*";
+    public static final String DIVISION = "/";
     public static void solveEquation(LinkedList<String> equation) {
         int currentIndex = 0;
         while(currentIndex < equation.size()) {
@@ -60,7 +61,40 @@ public class Prob16 {
                 int numerator = Integer.parseInt(equation.get(currentIndex - 1));
                 int denominator = 1;
 
-                int nextOperand = Integer.parseInt(equation.get(currentIndex + 1));
+                boolean finished = false;
+
+                while(current.equals(MULTIPLICATION) || current.equals(DIVISION) && !finished) {
+                    int nextOperand = Integer.parseInt(equation.remove(currentIndex + 1));
+                    equation.remove(currentIndex);
+
+                    if(current.equals(MULTIPLICATION)) {
+                        numerator *= nextOperand;
+                    } else if(current.equals(DIVISION)) {
+                        denominator *= nextOperand;
+                    }
+
+                    if(currentIndex > equation.size()) {
+                        finished = true;
+                    } else {
+                        current = equation.get(currentIndex);
+                    }
+                }
+
+                // get rid of first operand
+                equation.remove(currentIndex - 1);
+
+                if(denominator == 0) return;
+
+                int remainder = numerator % denominator;
+
+                if(remainder != 0) {
+                    return;
+                } else {
+                    int result = numerator / denominator;
+                    equation.add(currentIndex - 1, String.valueOf(result));
+                }
+            } else {
+                currentIndex++;
             }
         }
     }
