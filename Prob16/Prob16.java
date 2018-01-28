@@ -7,7 +7,8 @@ public class Prob16 {
     public static String[] operands;
     public static boolean[] operatorsUsed;
     public static boolean[] operandsUsed;
-    public boolean solutionFound;
+    public static boolean solutionFound;
+    public static int targetValue;
 
     public static void main(String[] args) {
         try {
@@ -18,7 +19,7 @@ public class Prob16 {
             int n = Integer.parseInt(br.readLine());
             for(int i = 0; i < n; i++) {
                 String[] currInput = br.readLine().split(":");
-                int result = Integer.parseInt(currInput[0]);
+                targetValue = Integer.parseInt(currInput[0]);
 
                 String[] integersAndOperators = currInput[1].split(" ");
                 int numOperators = integersAndOperators.length / 2;
@@ -51,6 +52,8 @@ public class Prob16 {
         }
     }
 
+    public static final String ADDITION = "+";
+    public static final String SUBTRACTION = "-";
     public static final String MULTIPLICATION = "*";
     public static final String DIVISION = "/";
     public static void solveEquation(LinkedList<String> equation) {
@@ -58,7 +61,8 @@ public class Prob16 {
         while(currentIndex < equation.size()) {
             String current = equation.get(currentIndex);
             if(current.equals(MULTIPLICATION) || current.equals(DIVISION)) {
-                int numerator = Integer.parseInt(equation.get(currentIndex - 1));
+                int firstOperand = Integer.parseInt(equation.get(currentIndex - 1));
+                int numerator = firstOperand;
                 int denominator = 1;
 
                 boolean finished = false;
@@ -96,6 +100,27 @@ public class Prob16 {
             } else {
                 currentIndex++;
             }
+
+            if(current.equals(ADDITION) || current.equals(SUBTRACTION)) {
+                int firstOperand = Integer.parseInt(equation.get(currentIndex - 1));
+                String operator = equation.remove(currentIndex);
+                int secondOperand = Integer.parseInt(equation.remove(currentIndex + 1));
+
+                int result;
+                if(operator.equals(ADDITION)) {
+                    result = firstOperand + secondOperand;
+                } else {
+                    result = firstOperand - secondOperand;
+                }
+                equation.remove(currentIndex - 1);
+                equation.add(currentIndex - 1, String.valueOf(result));
+            } else {
+                currentIndex++;
+            }
+        }
+        int result = Integer.parseInt(equation.pop());
+        if(result == targetValue) {
+            solutionFound = true;
         }
     }
 }
