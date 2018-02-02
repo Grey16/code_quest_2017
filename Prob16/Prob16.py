@@ -14,6 +14,60 @@ SUBTRACTION = "-"
 MULTIPLICATION = "*"
 DIVISION = "/"
 
+def solveEquation(equation):
+    currentIndex = 0
+    while currentIndex < len(equation):
+        currentSymbol = equation[currentIndex]
+        if currentSymbol == MULTIPLICATION or currentSymbol == DIVISION:
+            firstOperand = equation[currentIndex - 1]
+            numerator = int(firstOperand)
+            denominator = 1
+            while currentSymbol == MULTIPLICATION or currentSymbol == DIVISION:
+                del(equation[currentIndex])
+                secondOperand = int(equation.pop(currentIndex))
+                if currentSymbol == MULTIPLICATION:
+                    numerator *= secondOperand
+                else:
+                    denominator *= secondOperand
+                if currentIndex < len(equation):
+                    currentSymbol = equation[currentIndex]
+                else:
+                    break
+            if denominator == 0 or (numerator % denominator != 0):
+                return
+            else:
+                result = int(numerator / denominator)
+                del(equation[currentIndex - 1])
+                equation.insert(currentIndex - 1, str(result))
+        else:
+            currentIndex += 1
+
+    currentIndex = 0
+    while currentIndex < len(equation):
+        currentSymbol = equation[currentIndex]
+        if currentSymbol == ADDITION or currentSymbol == SUBTRACTION:
+            firstOperand = int(equation[currentIndex - 1])
+            while currentSymbol == ADDITION or currentSymbol == SUBTRACTION:
+                del(equation[currentIndex])
+                secondOperand = int(equation.pop(currentIndex))
+                if currentSymbol == ADDITION:
+                    firstOperand += secondOperand
+                else:
+                    firstOperand -= secondOperand
+                if currentIndex < len(equation):
+                    currentSymbol = equation[currentIndex]
+                else:
+                    break
+            del(equation[currentIndex - 1])
+            equation.insert(currentIndex - 1, str(firstOperand))
+        else:
+            currentIndex += 1
+
+    if int(equation.pop()) == targetResult:
+        global solutionFound
+        solutionFound = True
+
+
 def main():
     with open("Prob16.in.txt") as f:
         inputList = [line.rstrip('\n') for line in f]
@@ -50,20 +104,9 @@ def main():
             global solutionFound
             solutionFound = False
             equation = [None] * (numOperands + numOperators)
+            myList = ["8", "*", "4", "+", "4", "/", "4"]
+            solveEquation(myList)
 
             #fillEquation(0)
-
-def fillEquation(currentPosition):
-    #fillEquation
-
-def solveEquation(equation):
-    currentIndex = 0
-    while currentIndex < len(equation):
-        currentSymbol = equation[currentIndex]
-        if currentSymbol == MULTIPLICATION or currentSymbol == DIVISION:
-
-
-
-
 
 if __name__ == "__main__": main()
