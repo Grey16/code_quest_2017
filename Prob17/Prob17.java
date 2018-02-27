@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-
+// possibly implement using a Tree
 public class Prob17 {
     public static String[][] board;
 
